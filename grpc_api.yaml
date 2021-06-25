@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-server-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-server
+  template:
+    metadata:
+      labels:
+        app: hello-server
+        version: v1
+    spec:
+      containers:
+      - name: hello-server
+        image: unpuytw/grpc-hello-server:v1
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 50051
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-server-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-server
+  template:
+    metadata:
+      labels:
+        app: hello-server
+        version: v2
+    spec:
+      containers:
+      - name: hello-server
+        image: unpuytw/grpc-hello-server:v2
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 50051
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-server
+spec:
+  selector:
+    app: hello-server
+  ports:
+  - name: grpc-api
+    protocol: TCP
+    port: 50051
+    targetPort: 50051
+  type: ClusterIP
