@@ -25,13 +25,13 @@ spec:
   http:
     - route:
       - destination:
-          host: hello-server
+          host: hello-server-service
           subset: v1
           port:
             number: 50051
         weight: 90
       - destination:
-          host: hello-server
+          host: hello-server-service
           subset: v2
           port:
             number: 50051
@@ -42,7 +42,7 @@ kind: DestinationRule
 metadata:
   name: grpc-api
 spec:
-  host: hello-server
+  host: hello-server-service
   subsets:
     - name: v1
       labels:
