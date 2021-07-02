@@ -1,5 +1,9 @@
 # version
-準備中
+## Kubernetes
+- minikube v1.20.0
+
+## Istio
+- 1.10.2
 
 # デプロイ
 ```
